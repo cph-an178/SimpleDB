@@ -1,22 +1,24 @@
 import pickle
+import argparse
 
 def run():
-    i = input("Type 'a' to add something to the db or 'g' to get something \n>")
+
+    parser = argparse.ArgumentParser()
+
+    parser.add_argument("-a", "--add", help="Add to database", action="store_true")
+    parser.add_argument("-g", "--get", help="Get from database", action="store_true")
+    parser.add_argument("input", metavar="i",  help="Input for what you want to add or what key you want to search for")
+
+    args = parser.parse_args()
     
-    if i is "a":
-        v = input("Type what you want to add\n>")
-        rv = add_to_dict(v)
+    if args.add:
+        rv = add_to_dict(args.input)
         print(rv)
-    elif i is "g":
-        k = input("Type the key you want to search for\n>")
-        rv = get_from_dict(k)
+    elif args.get:
+        rv = get_from_dict(args.input)
         print(rv)
-    else:
-        print("Invalid input")
 
 def add_to_dict(value):
-    # TODO load dict and add to dict
-
     dictionary = load_dict()
     dictionary[len(dictionary)] = value
     save_dict(dictionary)
@@ -24,10 +26,7 @@ def add_to_dict(value):
     return "Your key is {0} and you added {1}".format(len(dictionary) - 1, value)
 
 def get_from_dict(key):
-    
     dictionary = load_dict()
-    print(dictionary)
-
     return dictionary[int(key)]
 
 def save_dict(dictionary):
