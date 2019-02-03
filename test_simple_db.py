@@ -32,9 +32,9 @@ def test_add_to_db():
     key = "1234"
     value = '{"name":"Bankok", "attractions":["Wat Pho", "Wat Arun"]}'
     sb.add(key, value)
-    should = b'1234:{"name":"Bankok", "attractions":["Wat Pho", "Wat Arun"]}'
+    should = b'1234:{"name":"Bankok", "attractions":["Wat Pho", "Wat Arun"]}\n'
     with open(test_db, "rb") as f:
-        byte_start = list(sb.bytes_offset.values())[-1]
+        byte_start = list(sb.bytes_offset.values())[-2]
         f.seek(byte_start)
         result = f.readline()
         assert result == should

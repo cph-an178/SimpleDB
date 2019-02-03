@@ -40,5 +40,8 @@ class SimpleDB():
         byte_start = list(self.bytes_offset.values())[-1]
         with open(self.db_file, "wb") as f:
             f.seek(byte_start)
-            str_text = "{0}:{1}".format(key, value)
+            str_text = "{0}:{1}\n".format(key, value)
             f.write(str_text.encode('ascii'))
+
+            self.bytes_offset[key] = f.tell()
+        
