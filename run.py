@@ -2,8 +2,7 @@ import argparse
 from simple_db import SimpleDB
 
 def run():
-    # TODO implement SimpleDB and make it run with argparse
-
+    # Initializer the SimpleDB class
     sb = SimpleDB()
 
     parser = argparse.ArgumentParser()
@@ -14,7 +13,6 @@ def run():
     args = parser.parse_args()
 
     if args.run:
-        # TODO Run program with inputs
         while True:
             print("Type 'a' or 'add' to add a key and value to the database")
             print("Type 'g' or 'get' to search for a key and return a value")
