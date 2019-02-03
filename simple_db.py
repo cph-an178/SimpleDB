@@ -37,11 +37,13 @@ class SimpleDB():
 
     def add(self, key, value):
         # TODO add comments
-        byte_start = list(self.bytes_offset.values())[-1]
-        with open(self.db_file, "wb") as f:
-            f.seek(byte_start)
+        with open(self.db_file, "ab") as f:
+            offset = 0
+            if self.bytes_offset:
+                offset = f.seek(0, os.SEEK_END)
+            self.bytes_offset[key] = offset
             str_text = "{0}:{1}\n".format(key, value)
-            f.write(str_text.encode('ascii'))
-
-            self.bytes_offset[key] = f.tell()
+            f.write(str.encode(str_text))
+            
+            
         
