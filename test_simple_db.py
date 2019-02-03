@@ -10,7 +10,7 @@ def test_class_init_db_doesnt_exist():
 
 def test_class_init_db_exist_without_data():
     sb = SimpleDB(test_db)
-    result = sb.get_bytesoffset()
+    result = sb.bytes_offset
     assert len(result) == 0 
 
 def test_class_init_db_exist_with_data():
@@ -22,13 +22,13 @@ def test_class_init_db_exist_with_data():
         bytefile.write(byte_text)
     
     sb = SimpleDB(test_db)
-    result = sb.get_bytesoffset()
+    result = sb.bytes_offset
     assert len(result) == 2
 
 def test_get_from_db():
     sb = SimpleDB(test_db)
     result = sb.get('1')
-    should = '1,{"name":"London","attractions":["Big Ben","London Eye"]}\n'
+    should = '{"name":"London","attractions":["Big Ben","London Eye"]}\n'
     assert result == should
 
 def test_add_to_db():

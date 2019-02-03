@@ -21,12 +21,9 @@ class SimpleDB():
         with open(self.db_file, 'rb') as f:
             f.seek(byte_start)
             line = f.readline()
-            end_key = line.find(b',')
-            return line[end_key:].decode('UTF-8')
+            key_end = line.find(b',')
+            return line[key_end + 1:].decode('UTF-8')
 
     def add(self, key, value):
         # TODO add key and value to bytefile
         pass
-
-    def get_bytesoffset(self): # For testing
-        return self.bytes_offset
