@@ -4,12 +4,12 @@ from simple_db import SimpleDB
 
 test_db = "test.db"
 
-def test_class_init_new_db():
+def test_init_new_db():
     sb = SimpleDB(test_db)
     result = sb.bytes_offset
     assert len(result) == 0
 
-def test_class_init_db_exist_with_data():
+def test_init_db_exist_with_data():
     str_text = """1:{"name":"London","attractions":["Big Ben","London Eye"]}
 12:{"name":"San Francisco","attractions":["Golden Gate Bridge"]}
 """
