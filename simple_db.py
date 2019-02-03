@@ -1,41 +1,32 @@
-import pickle
-import argparse
+import os
 
-def run():
+class SimpleDB():
+    def __init__(self, db_file="database.db"):
+        if not os.path.isfile(db_file):
+            open(db_file, "a").close()
 
-    parser = argparse.ArgumentParser()
+        self.db_file = db_file
+        self.bytes_offset = {}
 
-    parser.add_argument("-a", "--add", help="Add to database", action="store_true")
-    parser.add_argument("-g", "--get", help="Get from database", action="store_true")
-    parser.add_argument("input", metavar="i",  help="Input for what you want to add or what key you want to search for")
+        with open(db_file, "rb") as bytefile:
+            byte_pos = 0
+            for line in bytefile:
+                key_end = line.find(b',')
+                key = line[:key_end].decode('UTF-8')
+                self.bytes_offset[key] = byte_pos
+                byte_pos = line.find(b'\n') + 1
 
-    args = parser.parse_args()
-    
-    if args.add:
-        rv = add_to_dict(args.input)
-        print(rv)
-    elif args.get:
-        rv = get_from_dict(args.input)
-        print(rv)
+    def get(self, key):
+        byte_start = self.bytes_offset[key]
+        with open(self.db_file, 'rb') as f:
+            f.seek(byte_start)
+            line = f.readline()
+            end_key = line.find(b',')
+            return line[end_key:].decode('UTF-8')
 
-def add_to_dict(value):
-    dictionary = load_dict()
-    dictionary[len(dictionary)] = value
-    save_dict(dictionary)
+    def add(self, key, value):
+        # TODO add key and value to bytefile
+        pass
 
-    return "Your key is {0} and you added {1}".format(len(dictionary) - 1, value)
-
-def get_from_dict(key):
-    dictionary = load_dict()
-    return dictionary[int(key)]
-
-def save_dict(dictionary):
-    with open("db_dump.pkl", "wb") as f:
-        pickle.dump(dictionary, f)
-
-def load_dict():
-    with open("db_dump.pkl", "rb") as f:
-        return pickle.load(f)
-
-if __name__ == "__main__":
-    run()
+    def get_bytesoffset(self): # For testing
+        return self.bytes_offset
