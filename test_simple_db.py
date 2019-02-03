@@ -39,7 +39,6 @@ def test_add_to_db():
         result = f.readline()
         assert result == should
 
-
 def test_teardown():
     os.remove(test_db)
     assert not os.path.isfile(test_db)
