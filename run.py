@@ -1,11 +1,8 @@
-import os
 import argparse
+from simple_db import SimpleDB
 
 def run():
-
-    if not os.path.isfile("db_dump.db"):
-        open("db_dump.db", 'a').close()
-
+    # TODO implement SimpleDB and make it run with argparse
     parser = argparse.ArgumentParser()
 
     parser.add_argument("-a", "--add", help="Add to database", action="store_true")
@@ -15,12 +12,6 @@ def run():
 
     args = parser.parse_args()
     
-
-def db_set(key, value):
-    pass
-
-def db_get(key):
-    pass
 
 if __name__ == "__main__":
     run()
